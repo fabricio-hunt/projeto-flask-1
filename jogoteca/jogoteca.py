@@ -5,7 +5,8 @@ app = Flask(__name__)
 #criar uma rota
 @app.route('/home')
 def ola():
-    return render_template('lista.html')
+    lista_de_jogos = ['God of War', 'Skyrim', 'Valorant']
+    return render_template('lista.html', titulo_home='Jogos',jogos = lista_de_jogos)     
 
 #rodar a aplicação
 app.run()
