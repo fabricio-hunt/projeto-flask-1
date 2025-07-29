@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 #mudar a estrutura para orientação a objetos
 class Jogo:
     def __init__(self, nome, categoria, console):
@@ -6,24 +6,32 @@ class Jogo:
         self.categoria = categoria
         self.console = console
 
-#chamar a função Flask
+jogo1 = Jogo('Super Mario Bros', 'Plataforma', 'SNES')
+jogo2 = Jogo('Castlevania', 'RPG', 'SNES')
+jogo3 = Jogo('Final Fantasy', 'RPG', 'SNES')
+jogo4 = Jogo('Mortal Kombat', 'Luta', 'SNES')
+lista_de_jogos = [jogo1, jogo2, jogo3, jogo4]
+
+
 app = Flask(__name__)
 
-#criar uma rota
+
 @app.route('/home')
 def ola():
-    #instanciar os jogos
-    jogo1 = Jogo('Super Mario Bros', 'Plataforma', 'SNES')
-    jogo2 = Jogo('Castlevania', 'RPG', 'SNES')
-    jogo3 = Jogo('Final Fantasy', 'RPG', 'SNES')
-    jogo4 = Jogo('Mortal Kombat', 'Luta', 'SNES')
-    #criar uma lista de jogos
-    lista_de_jogos = [jogo1, jogo2, jogo3, jogo4]
     return render_template('lista.html', titulo_home='Jogos',jogos = lista_de_jogos)     
 
 @app.route('/novos-jogos')
 def novos_jogos():
     return render_template('novos-jogos.html', titulo='Novos Jogos')
 
-#rodar a aplicação
+
+@app.route('/criar', methods=['POST',])
+def criar():
+    nome = request.form['nome']
+    categoria = request.form['categoria']    
+    console = request.form['console']
+    jogo = Jogo(nome, categoria, console)
+    lista_de_jogos.append(jogo)
+    return render_template('lista.html', titulo_home='Jogos', Jogos = lista_de_jogos)
+
 app.run()
