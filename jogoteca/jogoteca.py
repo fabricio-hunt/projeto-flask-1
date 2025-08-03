@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 #mudar a estrutura para orientação a objetos
 class Jogo:
     def __init__(self, nome, categoria, console):
@@ -33,6 +33,5 @@ def criar():
     console = request.form['console']
     jogo = Jogo(nome, categoria, console)
     lista_de_jogos.append(jogo)
-    return render_template('lista.html', titulo_home='Jogos', Jogos = lista_de_jogos)
-
+    return redirect('/')
 app.run(debug=True)
