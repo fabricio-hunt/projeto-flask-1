@@ -34,4 +34,11 @@ def criar():
     jogo = Jogo(nome, categoria, console)
     lista_de_jogos.append(jogo)
     return redirect('/')
+
+#criar uma rota para uma nova página de login
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
 app.run(debug=True)
