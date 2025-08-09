@@ -40,5 +40,11 @@ def criar():
 def login():
     return render_template('login.html')
 
-
+#criar uma rota para autenticar o login
+@app.route('/autenticar', methods=['POST',])
+def autenticar():
+    if 'olamundo' == request.form['senha']:
+        return redirect('/')
+    else:   
+        return redirect('/login')
 app.run(debug=True)
