@@ -50,5 +50,12 @@ def autenticar():
     else:
         flash('Usuário ou senha inválidos!')   
         return redirect('/login')
+    
+@app.route('/logout')
+def logout():
+    session['usuario'] = None
+    flash('Usuário deslogado com sucesso!')
+    return redirect('/')
+
 
 app.run(debug=True)
