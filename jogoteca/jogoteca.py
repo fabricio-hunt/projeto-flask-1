@@ -23,7 +23,7 @@ def index():
 @app.route('/novos-jogos')
 def novos_jogos():
     if 'usuario'not in session or session['usuario'] == None:
-        return redirect('/login')
+        return redirect('/login?proxima=novos-jogos')
     return render_template('novos-jogos.html', titulo='Novos Jogos')
 
 
@@ -40,7 +40,8 @@ def criar():
 #criar uma rota para uma nova página de login
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    proxima = request.args.get('proxima')
+    return render_template('login.html', proxima = proxima)
 
 #criar uma rota para autenticar o login
 @app.route('/autenticar', methods=['POST',])
@@ -48,7 +49,9 @@ def autenticar():
     if 'olamundo' == request.form['senha']:
         session['usuario'] = request.form['usuario']
         flash(session['usuario'] + ' logado com sucesso!')
-        return redirect('/')
+        
+        proxima_pagina = request.form['proxima']
+        return redirect('/{}'.format(proxima_pagina))
     else:
         flash('Usuário ou senha inválidos!')   
         return redirect('/login')
